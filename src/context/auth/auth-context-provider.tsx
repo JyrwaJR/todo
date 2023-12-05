@@ -20,12 +20,12 @@ async function register(email: string, password: string) {
 }
 const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = React.useState<User>({
+    name: "Jyrwa",
+    token: "test",
+    id: "1",
+    isLogged: true,
     email: "",
     password: "",
-    name: "",
-    token: "",
-    id: "",
-    isLogged: false,
   });
   const onLogin = async (email: string, password: string) => {
     const res = await login(email, password);

@@ -22,6 +22,7 @@
       "@src/*": ["./src/*"],
       "@components/*": ["./src/components/*"],
       "@libs/*": ["./src/libs/*"],
+      "@fonts/*": ["./src/libs/fonts/*"],
       "@api/*": ["./src/app/api/*"],
       "@context/*": ["./src/context/*"]
     }

@@ -26,6 +26,7 @@ import {
   SelectFieldPlaceHolderMessage,
   TextFieldPlaceHolderMessage,
 } from "@src/config";
+import { Textarea } from "../ui/textarea";
 
 type OptionsT = {
   label: string;
@@ -98,24 +99,55 @@ const BrandFormField = <T,>({
                         </Select>
                       </FormItem>
                     ) : (
-                      <React.Fragment key={i}>
-                        <FormItem className='w-full'>
-                          <FormLabel>
-                            {input.label}{" "}
-                            {input.required && (
-                              <span className='text-red-500'>*</span>
-                            )}
-                          </FormLabel>
-                          <Input
-                            {...field}
-                            className='w-full'
-                            placeholder={TextFieldPlaceHolderMessage}
-                            type={input.type}
-                          />
-                          <FormDescription>{input.helperText}</FormDescription>
-                          <FormMessage />
-                        </FormItem>
-                      </React.Fragment>
+                      <>
+                        {input.type === "date" ? (
+                          <React.Fragment key={i}>
+                            <FormItem className='w-full'>
+                              <FormLabel>
+                                {input.label}{" "}
+                                {input.required && (
+                                  <span className='text-red-500'>*</span>
+                                )}
+                              </FormLabel>
+                              <Input
+                                {...field}
+                                className='w-full'
+                                placeholder={TextFieldPlaceHolderMessage}
+                                type={input.type}
+                              />
+                              <FormDescription>
+                                {input.helperText}
+                              </FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          </React.Fragment>
+                        ) : (
+                          <React.Fragment key={i}>
+                            <FormItem className='w-full'>
+                              <FormLabel>
+                                {input.label}{" "}
+                                {input.required && (
+                                  <span className='text-red-500'>*</span>
+                                )}
+                              </FormLabel>
+                              {input.type === "textarea" ? (
+                                <Textarea {...field} className='w-full' />
+                              ) : (
+                                <Input
+                                  {...field}
+                                  className='w-full'
+                                  placeholder={TextFieldPlaceHolderMessage}
+                                  type={input.type}
+                                />
+                              )}
+                              <FormDescription>
+                                {input.helperText}
+                              </FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          </React.Fragment>
+                        )}
+                      </>
                     )}
                   </div>
                 )}
@@ -126,12 +158,10 @@ const BrandFormField = <T,>({
       ) : (
         <>
           {inputFields.map((input, i) => (
-            <>
-              <div
-                key={i}
-                className='w-full h-12 bg-gray-200 rounded-lg col-span-auto animate-pulse'
-              />
-            </>
+            <div
+              key={i + input.name}
+              className='w-full h-12 bg-gray-200 rounded-lg col-span-auto animate-pulse'
+            />
           ))}
         </>
       )}

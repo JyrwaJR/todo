@@ -10,10 +10,10 @@ import dynamic from "next/dynamic";
 
 function ModeToggle() {
   return (
-    <div className='h-screen'>
+    <div className='h-[100rem]'>
       <Card>
         <CardHeader>
-          <CardTitle>Card title</CardTitle>
+          <CardTitle>Welcome</CardTitle>
           <CardDescription>Card description</CardDescription>
         </CardHeader>
         <CardContent>Card content</CardContent>

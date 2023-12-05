@@ -16,11 +16,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginInputFields } from "@src/libs/form-fields";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { useTheme } from "next-themes";
-import { Button } from "../ui/button";
+import { toast } from "../ui/use-toast";
 
 const LoginModal = () => {
   const { user, login } = useAuth();
-  const { setTheme } = useTheme();
+  const [isEmailValid, setIsEmailValid] = React.useState(false);
   const form = useForm<LoginModelType>({
     resolver: zodResolver(LoginModel),
     defaultValues: {
@@ -35,9 +35,13 @@ const LoginModal = () => {
       email: data.email,
       password: data.password,
     });
+    toast({
+      title: "Scheduled: Catch up",
+      description: "Friday, February 10, 2023 at 5:57 PM",
+    });
   };
   return (
-    <Dialog open={user.isLogged}>
+    <Dialog open={!user.isLogged}>
       <DialogContent className='max-w-[450px]'>
         <Tabs defaultValue='login' className='w-full pt-4'>
           <TabsList className='grid w-full grid-cols-2'>
