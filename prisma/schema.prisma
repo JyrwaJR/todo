@@ -9,35 +9,63 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
 model User {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
   name      String?
-  email     String  @unique
+  email     String     @unique
   password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  todos     Todo[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  todos     Task[]
   projects  Projects[]
+  role      ROLE       @default(USER)
 }
 
-model Todo {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  projectId String? @db.ObjectId
-  title     String
-  completed Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User?   @relation(fields: [userId], references: [id])
-  userId    String? @db.ObjectId
-  project   Projects? @relation(fields: [projectId], references: [id])
+model Task {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  projectId   String?     @db.ObjectId
+  title       String
+  description String?
+  status      TODO_STATUS @default(NOT_STARTED)
+  completed   Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  user        User?       @relation(fields: [userId], references: [id])
+  userId      String?     @db.ObjectId
+  project     Projects?   @relation(fields: [projectId], references: [id])
 }
-model Projects{
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+
+model Projects {
+  id        String         @id @default(auto()) @map("_id") @db.ObjectId
   title     String
-  completed Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User?   @relation(fields: [userId], references: [id])
-  userId    String? @db.ObjectId
-  todos     Todo[]
+  completed Boolean?       @default(false)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  user      User?          @relation(fields: [userId], references: [id])
+  userId    String?        @db.ObjectId
+  todos     Task[]
+}
+
+enum TODO_STATUS {
+  ACTIVE
+  NOT_STARTED
+  COMPLETED
+  IN_PROGRESS
+  ON_HOLD
+  CANCELLED
+}
+
+enum PROJECT_STATUS {
+  ACTIVE
+  NOT_STARTED
+  COMPLETED
+  IN_PROGRESS
+  ON_HOLD
+  CANCELLED
+}
+
+enum ROLE {
+  USER
+  ADMIN
 }
